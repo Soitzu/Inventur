@@ -19,4 +19,4 @@ RUN python3 create_superuser.py
 
 RUN rm create_superuser.py
 
-CMD ["gunicorn", "main.wsgi:application", "--bind", "0.0.0.0:8080"]
+CMD ["gunicorn", "inventur.wsgi:application", "--bind", "0.0.0.0:8080"]
