@@ -10,10 +10,10 @@ def user_form(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         st_number = request.POST.get('st_number')
-        mini_pc = request.POST.get('mini_pc') == 'on'
-        laptop = request.POST.get('laptop') == 'on'
-        drucker = request.POST.get('drucker') == 'on'
-        monitore = request.POST.get('monitore') == 'on'
+        mini_pc = request.POST.get('mini_pc')
+        laptop = request.POST.get('laptop')
+        drucker = request.POST.get('drucker')
+        monitore = request.POST.get('monitore')
         monitor_count = request.POST.get('monitor_count')
         monitor_count = int(monitor_count) if monitor_count else 0
         sonstige_hardware = request.POST.get('sonstige_hardware') == 'on'
