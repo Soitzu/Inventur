@@ -10,26 +10,26 @@ def user_form(request):
         first_name = request.POST.get('first_name')
         last_name = request.POST.get('last_name')
         st_number = request.POST.get('st_number')
-        mini_pc = request.POST.get('mini_pc')
-        laptop = request.POST.get('laptop')
-        drucker = request.POST.get('drucker')
-        monitore = request.POST.get('monitore')
+        mini_pc = request.POST.get('mini_pc') == 'on'
+        laptop = request.POST.get('laptop') == 'on'
+        drucker = request.POST.get('drucker') == 'on'
+        monitore = request.POST.get('monitore') == 'on'
         monitor_count = request.POST.get('monitor_count')
         monitor_count = int(monitor_count) if monitor_count else 0
-        sonstige_hardware = request.POST.get('sonstige_hardware') == 'on'
         sonstige_hardware_details = request.POST.get('sonstige_hardware_details')
 
-        Hardware.objects.create(
-        first_name=first_name,
-        last_name=last_name,
-        st_number=st_number,
-        mini_pc=mini_pc,
-        laptop=laptop,
-        drucker=drucker,
-        monitore=monitore,
-        monitor_count=monitor_count,
-        sonstige_hardware_details=sonstige_hardware_details,
+         hardware = Hardware(
+            first_name=first_name,
+            last_name=last_name,
+            st_number=st_number,
+            mini_pc=mini_pc,
+            laptop=laptop,
+            drucker=drucker,
+            monitore=monitore,
+            monitor_count=monitor_count,
+            sonstige_hardware_details=sonstige_hardware_details
         )
+        hardware.save()
         return redirect('user_form')
         
     return render(request, "user_form.html")
