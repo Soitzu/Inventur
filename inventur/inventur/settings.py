@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-s&83abbbdda(q=s2*q5qti$l8-^rc-av^qg5qdg6##y7vp_a84
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+<<<<<<< HEAD
 ALLOWED_HOSTS = ["127.0.0.1", "192.168.71.110"]
+=======
+ALLOWED_HOSTS = ["192.168.71.110", "inventur.pos-sg.com"]
+>>>>>>> 07aad1d78a41438f92cdbf016bb8a1033caf3e4f
 
 
 # Application definition
