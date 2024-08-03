@@ -16,7 +16,6 @@ def user_form(request):
         monitore = request.POST.get('monitore') == 'on'
         monitor_count = request.POST.get('monitor_count')
         monitor_count = int(monitor_count) if monitor_count else 0
-        sonstige_hardware = request.POST.get('sonstige_hardware') == 'on'
         sonstige_hardware_details = request.POST.get('sonstige_hardware_details')
 
         Hardware.objects.create(
