@@ -20,6 +20,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
+        overflow: hidden;
     }
     
     .container {
@@ -29,17 +30,27 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         max-width: 1000px;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
     }
     
     h2 {
         margin-bottom: 20px;
         color: #333;
+        text-align: center;
+    }
+    
+    .table-container {
+        max-height: 400px; /* Höhe des Scrollcontainers, kann angepasst werden */
+        width: 100%;
+        overflow-y: auto; /* Ermöglicht vertikales Scrollen bei Bedarf */
     }
     
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-bottom: 20px;
     }
     
     table, th, td {
@@ -53,6 +64,9 @@
     
     th {
         background-color: #f2f2f2;
+        position: sticky; /* Klebt das Header-Element beim Scrollen */
+        top: 0;
+        z-index: 1;
     }
     
     button {
@@ -63,6 +77,7 @@
         border-radius: 4px;
         cursor: pointer;
         transition: background-color 0.3s;
+        margin-top: 20px;
     }
     
     button:hover {
@@ -73,38 +88,36 @@
 <body>
     <div class="container">
         <h2>Mitarbeiter Hardware Daten</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Vorname</th>
-                    <th>Nachname</th>
-                    <th>ST-Nummer</th>
-                    <th>Mini-PC</th>
-                    <th>Laptop</th>
-                    <th>Drucker</th>
-                    <th>Monitore</th>
-                    <th>Anzahl Monitore</th>
-                    <th>Sonstige Hardware</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for employee in employees %}
-                <tr>
-                    <td>{{ employee.id }}</td>	
-                    <td>{{ employee.first_name }}</td>
-                    <td>{{ employee.last_name }}</td>
-                    <td>{{ employee.st_number }}</td>
-                    <td>{{ employee.mini_pc|yesno:"Ja,Nein" }}</td>
-                    <td>{{ employee.laptop|yesno:"Ja,Nein" }}</td>
-                    <td>{{ employee.drucker|yesno:"Ja,Nein" }}</td>
-                    <td>{{ employee.monitore|yesno:"Ja,Nein" }}</td>
-                    <td>{{ employee.monitor_count }}</td>
-                    <td>{{ employee.sonstige_hardware_details }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Vorname</th>
+                        <th>Nachname</th>
+                        <th>Mini-PC</th>
+                        <th>Laptop</th>
+                        <th>Drucker</th>
+                        <th>Monitore</th>
+                        <th>Anzahl Monitore</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <td>{{ employee.id }}</td>	
+                        <td>{{ employee.first_name }}</td>
+                        <td>{{ employee.last_name }}</td>
+                        <td>{{ employee.mini_pc|yesno:"Ja,Nein" }}</td>
+                        <td>{{ employee.laptop|yesno:"Ja,Nein" }}</td>
+                        <td>{{ employee.drucker|yesno:"Ja,Nein" }}</td>
+                        <td>{{ employee.monitore|yesno:"Ja,Nein" }}</td>
+                        <td>{{ employee.monitor_count }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <form action="{% url 'download_excel' %}" method="get">
             <button type="submit">Excel Datei herunterladen</button>
         </form>

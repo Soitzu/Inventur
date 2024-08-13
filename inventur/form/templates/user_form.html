@@ -92,7 +92,7 @@
 <body>
     <div class="container">
         <h2>Homeoffice Hardware Formular</h2>
-        <form action="" method="post">
+        <form id="hardware_form" action="" method="post" onsubmit="return validateForm()">
             {% csrf_token %}
             <label for="first_name">Vorname:</label>
             <input type="text" id="first_name" name="first_name" required>
@@ -100,22 +100,41 @@
             <label for="last_name">Nachname:</label>
             <input type="text" id="last_name" name="last_name" required>
             
-            <label for="st_number">ST-Nummer:</label>
-            <input type="text" id="st_number" name="st_number">
-            
             <label>Hardware:</label>
             <div class="checkbox-group">
-                <label for="mini_pc"><input type="checkbox" name="mini_pc"> Mini PC</label>
-                <label><input type="checkbox" name="laptop"> Laptop</label>
+                <label for="mini_pc"><input type="checkbox" id="mini_pc" name="mini_pc"> Mini PC</label>
+                <label><input type="checkbox" id="laptop" name="laptop"> Laptop</label>
                 <label><input type="checkbox" name="drucker"> Drucker</label>
-                <label><input type="checkbox" name="monitore"> Monitore</label>
-                <label><input type="number" name="monitor_count" placeholder="Anzahl Monitore"></label>
-                <label>Sonstige Hardware</label>
-                <label><input type="text" name="sonstige_hardware_details" placeholder="Details zur sonstigen Hardware"></label>
+                <label><input type="checkbox" id="monitore" name="monitore"> Monitore</label>
+                <label><input type="number" id="monitor_count" name="monitor_count" placeholder="Anzahl Monitore" min="0" max="10" disabled></label>
             </div>
             
-            <button type="submit">Absenden</button>
+            <button id="submit" type="submit">Absenden</button>
         </form>
     </div>
+    <script>
+        document.getElementById('monitore').addEventListener('change', function() {
+            var monitorCountInput = document.getElementById('monitor_count');
+            if (this.checked) {
+                monitorCountInput.disabled = false;
+                monitorCountInput.required = true;
+            } else {
+                monitorCountInput.disabled = true;
+                monitorCountInput.required = false;
+            }
+        });
+
+        function validateForm() {
+            var mini_pc = document.getElementById('mini_pc').checked;
+            var laptop = document.getElementById('laptop').checked;
+
+            if (!mini_pc && !laptop) {
+                alert('Bitte wähle entweder Mini PC oder Laptop aus.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 </html>
