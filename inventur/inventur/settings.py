@@ -29,7 +29,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["127.0.0.1", "192.168.71.110", "inventur.pos-sg.com"]
 
-
+CSRF_TRUSTED_ORIGINS = ["https://inventur.pos-sg.com"]
 
 # Application definition
 

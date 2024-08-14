@@ -37,6 +37,13 @@
         color: #333;
     }
     
+    p {
+        margin-bottom: 20px;
+        color: #555;
+        line-height: 1.6;
+        text-align: center;
+    }
+    
     form {
         display: flex;
         flex-direction: column;
@@ -91,7 +98,11 @@
 </style>
 <body>
     <div class="container">
-        <h2>Homeoffice Hardware Formular</h2>
+        <h2 style="text-align: center;">Willkommen!</h2>
+        <p>In diesem Formular musst du die Geräte angeben, die du momentan im Homeoffice im Einsatz hast.</p>
+        <p>Bitte hake alle relevanten Geräte an und klicke auf "Absenden".</p>
+
+        <h2><hr></h2>
         <form id="hardware_form" action="" method="post" onsubmit="return validateForm()">
             {% csrf_token %}
             <label for="first_name">Vorname:</label>
@@ -106,7 +117,7 @@
                 <label><input type="checkbox" id="laptop" name="laptop"> Laptop</label>
                 <label><input type="checkbox" name="drucker"> Drucker</label>
                 <label><input type="checkbox" id="monitore" name="monitore"> Monitore</label>
-                <label><input type="number" id="monitor_count" name="monitor_count" placeholder="Anzahl Monitore" min="0" max="10" disabled></label>
+                <label><input type="number" id="monitor_count" name="monitor_count" placeholder="Anzahl Monitore" min="0" max="5" disabled></label>
             </div>
             
             <button id="submit" type="submit">Absenden</button>
@@ -124,12 +135,27 @@
             }
         });
 
+        document.getElementById('mini_pc').addEventListener('change', function() {
+            var monitoreCheckbox = document.getElementById('monitore');
+            if (this.checked) {
+                monitoreCheckbox.required = true;
+            } else {
+                monitoreCheckbox.required = false;
+            }
+        });
+
         function validateForm() {
             var mini_pc = document.getElementById('mini_pc').checked;
             var laptop = document.getElementById('laptop').checked;
+            var monitore = document.getElementById('monitore').checked;
 
             if (!mini_pc && !laptop) {
                 alert('Bitte wähle entweder Mini PC oder Laptop aus.');
+                return false;
+            }
+
+            if (mini_pc && !monitore) {
+                alert('Wenn du "Mini PC" auswählst, musst du auch "Monitore" auswählen.');
                 return false;
             }
 
